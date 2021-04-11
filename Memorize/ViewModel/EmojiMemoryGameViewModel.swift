@@ -9,15 +9,16 @@ import Foundation
 
 final class EmojiMemoryGameViewModel {
     private lazy var memoryCard: MemoryGame<String> = {
-        let emojis = ["👻", "🎃", "🧛🏼‍♂️", "🦇", "🕷", "🍬", "🕸", "🍭", "🧟‍♀️"]
-        return MemoryGame<String>(numberOfPairsOfCards: emojis.count) { pairIndex in
+        let randomCards = Int.random(in: 2...5)
+        let emojis = ["👻", "🎃", "🧛🏼‍♂️", "🦇", "🕷", "🍬", "🕸", "🍭", "🧟‍♀️"].shuffled()
+        return MemoryGame<String>(numberOfPairsOfCards: randomCards) { pairIndex in
             emojis[pairIndex]
         }
     }()
     
     //MARK: - Access to the Model
     var cards: [MemoryGame<String>.Card] {
-        memoryCard.cards
+        memoryCard.cards.shuffled()
     }
     
     //MARK: - Intent(s)

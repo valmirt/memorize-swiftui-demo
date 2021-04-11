@@ -8,13 +8,24 @@
 import SwiftUI
 
 struct ContentView: View {
+    var viewModel: EmojiMemoryGameViewModel
+    
     var body: some View {
-        CardView(isFaceUp: false)
+        HStack {
+            ForEach(viewModel.cards) { card in
+                CardView(card: card)
+                    .aspectRatio(2 / 3, contentMode: .fit)
+                    .onTapGesture { self.viewModel.choose(card: card) }
+            }
+        }
+        .font(viewModel.cards.count > 4 ? .title : .largeTitle)
+        .padding()
+        .foregroundColor(.orange)
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        ContentView(viewModel: EmojiMemoryGameViewModel())
     }
 }
