@@ -20,8 +20,10 @@ struct CardView: View {
                         .stroke(lineWidth: edgeWidth)
                     Text(card.content)
                 } else {
-                    RoundedRectangle(cornerRadius: cornerRadius)
-                        .fill()
+                    if !card.isMatched {
+                        RoundedRectangle(cornerRadius: cornerRadius)
+                            .fill()
+                    }
                 }
             }
             .font(.system(size: fontSize(for: geometry.size)))

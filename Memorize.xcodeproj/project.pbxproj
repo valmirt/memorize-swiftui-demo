@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		59366FD32625391900C4D692 /* Array+Only.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59366FD22625391900C4D692 /* Array+Only.swift */; };
 		594FC9062625231000718835 /* Grid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594FC9052625231000718835 /* Grid.swift */; };
 		594FC90D262528F600718835 /* GridLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594FC90C262528F600718835 /* GridLayout.swift */; };
 		595923802623838300E2479B /* MemorizeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5959237F2623838300E2479B /* MemorizeApp.swift */; };
@@ -19,6 +20,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		59366FD22625391900C4D692 /* Array+Only.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Only.swift"; sourceTree = "<group>"; };
 		594FC9052625231000718835 /* Grid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Grid.swift; sourceTree = "<group>"; };
 		594FC90C262528F600718835 /* GridLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridLayout.swift; sourceTree = "<group>"; };
 		5959237C2623838300E2479B /* Memorize.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Memorize.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -43,6 +45,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		59366FD1262538EB00C4D692 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				59366FD22625391900C4D692 /* Array+Only.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
 		595923732623838200E2479B = {
 			isa = PBXGroup;
 			children = (
@@ -62,6 +72,7 @@
 		5959237E2623838300E2479B /* Memorize */ = {
 			isa = PBXGroup;
 			children = (
+				59366FD1262538EB00C4D692 /* Extension */,
 				5959239B2623A00000E2479B /* Model */,
 				5959239C2623A00600E2479B /* View */,
 				5959239D2623A00D00E2479B /* ViewModel */,
@@ -184,6 +195,7 @@
 				5959239926239FE900E2479B /* EmojiMemoryGameViewModel.swift in Sources */,
 				594FC90D262528F600718835 /* GridLayout.swift in Sources */,
 				594FC9062625231000718835 /* Grid.swift in Sources */,
+				59366FD32625391900C4D692 /* Array+Only.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

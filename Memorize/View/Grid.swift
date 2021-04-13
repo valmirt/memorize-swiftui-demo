@@ -19,7 +19,7 @@ struct Grid<Item, ItemView>: View where Item: Identifiable, ItemView: View {
     var body: some View {
         GeometryReader { geometry in
             ForEach(items) { item in
-                let index = items.firstIndex(where: { $0.id == item.id }) ?? 0
+                let index = items.firstIndex(where: { $0.id == item.id })!
                 let layout = GridLayout(itemCount: items.count, in: geometry.size)
                 viewForItem(item)
                     .frame(width: layout.itemSize.width, height: layout.itemSize.height)
@@ -36,6 +36,6 @@ struct Grid_Previews: PreviewProvider {
             MemoryGame<String>.Card(isFaceUp: true, content: "👻"),
             MemoryGame<String>.Card(isFaceUp: true, content: "🎃"),
         ]
-        return Grid(cards) { CardView(card: $0) }
+        return Grid(cards) { CardView(card: $0).padding(5) }.padding()
     }
 }
