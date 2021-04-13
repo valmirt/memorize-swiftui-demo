@@ -7,8 +7,9 @@
 
 import Foundation
 
-final class EmojiMemoryGameViewModel {
-    private lazy var memoryCard: MemoryGame<String> = {
+final class EmojiMemoryGameViewModel: ObservableObject {
+    @Published
+    private var memoryCard: MemoryGame<String> = {
         let randomCards = Int.random(in: 2...5)
         let emojis = ["👻", "🎃", "🧛🏼‍♂️", "🦇", "🕷", "🍬", "🕸", "🍭", "🧟‍♀️"].shuffled()
         return MemoryGame<String>(numberOfPairsOfCards: randomCards) { pairIndex in
@@ -18,7 +19,7 @@ final class EmojiMemoryGameViewModel {
     
     //MARK: - Access to the Model
     var cards: [MemoryGame<String>.Card] {
-        memoryCard.cards.shuffled()
+        memoryCard.cards
     }
     
     //MARK: - Intent(s)

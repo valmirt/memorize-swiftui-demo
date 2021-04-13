@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    var viewModel: EmojiMemoryGameViewModel
+    @ObservedObject var viewModel: EmojiMemoryGameViewModel
     
     var body: some View {
         HStack {
@@ -18,7 +18,6 @@ struct ContentView: View {
                     .onTapGesture { self.viewModel.choose(card: card) }
             }
         }
-        .font(viewModel.cards.count > 4 ? .title : .largeTitle)
         .padding()
         .foregroundColor(.orange)
     }
