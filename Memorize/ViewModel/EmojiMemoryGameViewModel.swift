@@ -5,20 +5,23 @@
 //  Created by Valmir Junior on 11/04/21.
 //
 
-import Foundation
+import SwiftUI
 
 final class EmojiMemoryGameViewModel: ObservableObject {
     @Published
     private var memoryCard: MemoryGame<String> = {
-        let emojis = ["👻", "🎃", "🧛🏼‍♂️", "🦇", "🕷", "🍬", "🕸", "🍭", "🧟‍♀️"]
-        return MemoryGame<String>(numberOfPairsOfCards: emojis.count) { pairIndex in
-            emojis[pairIndex]
+        let deck = Deck.sortedDeck
+        return MemoryGame<String>(numberOfPairsOfCards: deck.pairEmojisCount, backgroundCard: deck.color) { pairIndex in
+            deck.emojis[pairIndex]
         }
     }()
     
     //MARK: - Access to the Model
     var cards: [MemoryGame<String>.Card] {
         memoryCard.cards
+    }
+    var backgroundColor: Color {
+        memoryCard.backgroundCard
     }
     
     //MARK: - Intent(s)

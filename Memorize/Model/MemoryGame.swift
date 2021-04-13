@@ -5,10 +5,11 @@
 //  Created by Valmir Junior on 11/04/21.
 //
 
-import Foundation
+import SwiftUI
 
 struct MemoryGame<Type> where Type: Equatable {
     var cards: [Card]
+    var backgroundCard: Color
     var indexOfTheOneAndOnlyFaceUpCard: Int? {
         get { cards.indices.filter({ cards[$0].isFaceUp }).only }
         set {
@@ -18,7 +19,7 @@ struct MemoryGame<Type> where Type: Equatable {
         }
     }
     
-    init(numberOfPairsOfCards: Int, cardContentFactory: (Int) -> Type) {
+    init(numberOfPairsOfCards: Int, backgroundCard: Color, cardContentFactory: (Int) -> Type) {
         var cards: [Card] = []
         for pairIndex in 0..<numberOfPairsOfCards {
             let content = cardContentFactory(pairIndex)
@@ -27,6 +28,7 @@ struct MemoryGame<Type> where Type: Equatable {
         }
         
         self.cards = cards.shuffled()
+        self.backgroundCard = backgroundCard
     }
     
     mutating func choose(card: Card) {

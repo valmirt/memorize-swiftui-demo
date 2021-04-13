@@ -17,7 +17,7 @@ struct ContentView: View {
                 .onTapGesture { viewModel.choose(card: card) }
         }
         .padding()
-        .foregroundColor(.orange)
+        .foregroundColor(viewModel.backgroundColor)
     }
 }
 
