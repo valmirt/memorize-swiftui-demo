@@ -11,13 +11,19 @@ struct ContentView: View {
     @ObservedObject var viewModel: EmojiMemoryGameViewModel
     
     var body: some View {
-        Grid(viewModel.cards) { card in
-            CardView(card: card)
-                .padding(5)
-                .onTapGesture { viewModel.choose(card: card) }
+        VStack {
+            HStack {
+                Spacer()
+                Button("New Game") { viewModel.newGame() }
+            }
+            Grid(viewModel.cards) { card in
+                CardView(card: card)
+                    .padding(5)
+                    .onTapGesture { viewModel.choose(card: card) }
+            }
+            .foregroundColor(viewModel.backgroundColor)
         }
         .padding()
-        .foregroundColor(viewModel.backgroundColor)
     }
 }
 

@@ -26,7 +26,7 @@ enum Deck {
         switch self {
         case .halloween: return .orange
         case .animals: return .yellow
-        case .food: return .clear
+        case .food: return .pink
         case .flags: return .blue
         case .smileys: return .red
         case .nature: return .green
