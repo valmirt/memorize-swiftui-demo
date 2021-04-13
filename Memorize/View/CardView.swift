@@ -41,5 +41,7 @@ struct CardView: View {
 struct CardView_Previews: PreviewProvider {
     static var previews: some View {
         CardView(card: MemoryGame<String>.Card(isFaceUp: true, content: "👻"))
+            .previewLayout(.fixed(width: 200, height: 300))
+            .padding()
     }
 }

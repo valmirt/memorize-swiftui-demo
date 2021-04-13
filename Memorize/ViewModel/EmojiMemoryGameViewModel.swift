@@ -10,9 +10,8 @@ import Foundation
 final class EmojiMemoryGameViewModel: ObservableObject {
     @Published
     private var memoryCard: MemoryGame<String> = {
-        let randomCards = Int.random(in: 2...5)
-        let emojis = ["👻", "🎃", "🧛🏼‍♂️", "🦇", "🕷", "🍬", "🕸", "🍭", "🧟‍♀️"].shuffled()
-        return MemoryGame<String>(numberOfPairsOfCards: randomCards) { pairIndex in
+        let emojis = ["👻", "🎃", "🧛🏼‍♂️", "🦇", "🕷", "🍬", "🕸", "🍭", "🧟‍♀️"]
+        return MemoryGame<String>(numberOfPairsOfCards: emojis.count) { pairIndex in
             emojis[pairIndex]
         }
     }()
