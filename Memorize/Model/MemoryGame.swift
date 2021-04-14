@@ -8,10 +8,10 @@
 import Foundation
 
 struct MemoryGame<Type> where Type: Equatable {
-    var cards: [Card]
-    var score = 0
+    private(set) var cards: [Card]
+    private(set) var score = 0
     
-    var indexOfTheOneAndOnlyFaceUpCard: Int? {
+    private var indexOfTheOneAndOnlyFaceUpCard: Int? {
         get { cards.indices.filter({ cards[$0].isFaceUp }).only }
         set {
             for index in cards.indices {
@@ -44,7 +44,7 @@ struct MemoryGame<Type> where Type: Equatable {
         }
     }
     
-    mutating func calculateScore(withSelectedCardAt currentIndex: Int, andPreviousSelectedCardAt previousIndex: Int) {
+    private mutating func calculateScore(withSelectedCardAt currentIndex: Int, andPreviousSelectedCardAt previousIndex: Int) {
         if cards[currentIndex].isMatched {
             score += 2
         } else {
