@@ -5,11 +5,12 @@
 //  Created by Valmir Junior on 11/04/21.
 //
 
-import SwiftUI
+import Foundation
 
 struct MemoryGame<Type> where Type: Equatable {
     var cards: [Card]
-    var backgroundCard: Color
+    var score = 0
+    
     var indexOfTheOneAndOnlyFaceUpCard: Int? {
         get { cards.indices.filter({ cards[$0].isFaceUp }).only }
         set {
@@ -19,7 +20,7 @@ struct MemoryGame<Type> where Type: Equatable {
         }
     }
     
-    init(numberOfPairsOfCards: Int, backgroundCard: Color, cardContentFactory: (Int) -> Type) {
+    init(numberOfPairsOfCards: Int, cardContentFactory: (Int) -> Type) {
         var cards: [Card] = []
         for pairIndex in 0..<numberOfPairsOfCards {
             let content = cardContentFactory(pairIndex)
@@ -28,7 +29,6 @@ struct MemoryGame<Type> where Type: Equatable {
         }
         
         self.cards = cards.shuffled()
-        self.backgroundCard = backgroundCard
     }
     
     mutating func choose(card: Card) {
@@ -37,15 +37,32 @@ struct MemoryGame<Type> where Type: Equatable {
                 cards[index].isMatched = cards[index].content == cards[potentialMachIndex].content
                 cards[potentialMachIndex].isMatched = cards[index].content == cards[potentialMachIndex].content
                 cards[index].isFaceUp = true
+                calculateScore(withSelectedCardAt: index, andPreviousSelectedCardAt: potentialMachIndex)
             } else {
                 indexOfTheOneAndOnlyFaceUpCard = index
             }
         }
     }
     
+    mutating func calculateScore(withSelectedCardAt currentIndex: Int, andPreviousSelectedCardAt previousIndex: Int) {
+        if cards[currentIndex].isMatched {
+            score += 2
+        } else {
+            if cards[currentIndex].alreadyBeenSeen {
+                score -= 1
+            }
+            if cards[previousIndex].alreadyBeenSeen {
+                score -= 1
+            }
+            cards[currentIndex].alreadyBeenSeen = true
+            cards[previousIndex].alreadyBeenSeen = true
+        }
+    }
+    
     struct Card: Identifiable {
         var isFaceUp: Bool = false
         var isMatched: Bool = false
+        var alreadyBeenSeen: Bool = false
         var content: Type
         var id: String = UUID().uuidString
     }

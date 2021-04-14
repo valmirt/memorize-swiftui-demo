@@ -7,8 +7,14 @@
 
 import SwiftUI
 
-enum Deck {
-    case halloween, animals, food, flags, smileys, nature, sports
+enum Deck: String {
+    case halloween = "Halloween"
+    case animals = "Animals"
+    case food = "Food"
+    case flags = "Flags"
+    case smileys = "Smileys"
+    case nature = "Nature"
+    case sports = "Sports"
     
     var emojis: [String] {
         switch self {

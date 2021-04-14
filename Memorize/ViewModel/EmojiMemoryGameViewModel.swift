@@ -10,14 +10,10 @@ import SwiftUI
 final class EmojiMemoryGameViewModel: ObservableObject {
     @Published
     private var memoryCard: MemoryGame<String> = EmojiMemoryGameViewModel.createMemoryGame()
+    private static var deck = Deck.sortedDeck
     
     static private func createMemoryGame() -> MemoryGame<String> {
-        let deck = Deck.sortedDeck
-        print(deck.pairEmojisCount)
-        print(deck.emojis)
-        print(deck.color)
-        print(deck)
-        return MemoryGame<String>(numberOfPairsOfCards: deck.pairEmojisCount, backgroundCard: deck.color) { pairIndex in
+        return MemoryGame<String>(numberOfPairsOfCards: deck.pairEmojisCount) { pairIndex in
             deck.emojis[pairIndex]
         }
     }
@@ -26,8 +22,14 @@ final class EmojiMemoryGameViewModel: ObservableObject {
     var cards: [MemoryGame<String>.Card] {
         memoryCard.cards
     }
-    var backgroundColor: Color {
-        memoryCard.backgroundCard
+    var cardsColor: Color {
+        EmojiMemoryGameViewModel.deck.color
+    }
+    var cardName: String {
+        EmojiMemoryGameViewModel.deck.rawValue
+    }
+    var gameScore: Int {
+        memoryCard.score
     }
     
     //MARK: - Intent(s)
@@ -36,6 +38,7 @@ final class EmojiMemoryGameViewModel: ObservableObject {
     }
     
     func newGame() {
+        EmojiMemoryGameViewModel.deck = Deck.sortedDeck
         memoryCard = EmojiMemoryGameViewModel.createMemoryGame()
     }
 }

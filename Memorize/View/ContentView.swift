@@ -12,17 +12,24 @@ struct ContentView: View {
     
     var body: some View {
         VStack {
-            HStack {
-                Spacer()
-                Button("New Game") { viewModel.newGame() }
+            ZStack {
+                HStack {
+                    Spacer()
+                    Button("New Game") { viewModel.newGame() }
+                        .foregroundColor(.blue)
+                }
+                Text(viewModel.cardName)
+                    .font(.title)
             }
             Grid(viewModel.cards) { card in
                 CardView(card: card)
                     .padding(5)
                     .onTapGesture { viewModel.choose(card: card) }
             }
-            .foregroundColor(viewModel.backgroundColor)
+            Text("Score: \(viewModel.gameScore)")
+                .font(.title2)
         }
+        .foregroundColor(viewModel.cardsColor)
         .padding()
     }
 }
