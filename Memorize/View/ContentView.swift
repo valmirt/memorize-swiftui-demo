@@ -11,30 +11,27 @@ struct ContentView: View {
     @ObservedObject var viewModel: EmojiMemoryGameViewModel
     
     var body: some View {
-        VStack {
-            ZStack {
-                HStack {
-                    Spacer()
-                    Button("New Game") { viewModel.newGame() }
-                        .foregroundColor(.blue)
+        NavigationView {
+            VStack {
+                Grid(viewModel.cards) { card in
+                    CardView(card: card)
+                        .padding(5)
+                        .onTapGesture {
+                            withAnimation(.linear(duration: 0.75)) {
+                                viewModel.choose(card: card)
+                            }
+                        }
                 }
-                Text(viewModel.cardName)
+                Text("Score: \(viewModel.gameScore)")
                     .font(.title)
             }
-            Grid(viewModel.cards) { card in
-                CardView(card: card)
-                    .padding(5)
-                    .onTapGesture {
-                        withAnimation(.linear(duration: 0.75)) {
-                            viewModel.choose(card: card)
-                        }
-                    }
-            }
-            Text("Score: \(viewModel.gameScore)")
-                .font(.title2)
+            .foregroundColor(viewModel.cardsColor)
+            .padding()
+            .navigationTitle(viewModel.cardName)
+            .toolbar(content: {
+                Button("New Game") { viewModel.newGame() }
+            })
         }
-        .foregroundColor(viewModel.cardsColor)
-        .padding()
     }
 }
 
