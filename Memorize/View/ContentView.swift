@@ -24,7 +24,11 @@ struct ContentView: View {
             Grid(viewModel.cards) { card in
                 CardView(card: card)
                     .padding(5)
-                    .onTapGesture { viewModel.choose(card: card) }
+                    .onTapGesture {
+                        withAnimation(.linear(duration: 0.75)) {
+                            viewModel.choose(card: card)
+                        }
+                    }
             }
             Text("Score: \(viewModel.gameScore)")
                 .font(.title2)
