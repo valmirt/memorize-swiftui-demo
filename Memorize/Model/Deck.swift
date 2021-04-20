@@ -18,9 +18,9 @@ enum Deck: String {
     
     var emojis: [String] {
         switch self {
-        case .halloween: return ["👻", "🎃", "🧛🏼‍♂️", "🦇", "🕷", "🍬", "🕸", "🍭", "🧟‍♀️", "💀", "⚰️"]
-        case .animals: return ["🐍", "🐢", "🐊", "🦢", "🐁", "🐿", "🐓", "🦒", "🦧", "🐋", "🦀", "🐟", "🐫", "🐘", "🐀", "🦨", "🦝", "🦜", "🦘"]
-        case .food: return ["🍔", "🍟", "🍕", "🍣", "🍪", "🍰", "🍜", "🌮", "🥓", "🧀", "🌭", "🌯", "🍛", "🥗"]
+        case .halloween: return ["👻", "🎃", "🧛🏼‍♂️", "🦇", "🕷", "🍬", "🕸", "🧟‍♀️", "💀", "⚰️"]
+        case .animals: return ["🐍", "🐢", "🐊", "🦢", "🐁", "🐿", "🦒", "🦧", "🐋", "🦀", "🐟", "🐘", "🐀", "🦨", "🦝", "🦜", "🦘"]
+        case .food: return ["🍔", "🍟", "🍕", "🍣", "🍪", "🍰", "🍜", "🌮"]
         case .flags: return ["🇧🇷", "🇨🇦", "🇮🇪", "🇺🇸", "🇺🇾", "🇦🇺", "🇩🇪", "🏴󠁧󠁢󠁥󠁮󠁧󠁿", "🇦🇷", "🇨🇺", "🇨🇳", "🇯🇵", "🇷🇺", "🇮🇸", "🇳🇿", "🇵🇹", "🇪🇸", "🇫🇷", "🇧🇪"]
         case .smileys: return ["😂", "🥰", "😍", "😎", "🤓", "🤪", "😫", "🥸", "😡", "🥶", "🤢", "😈", "💩"]
         case .nature: return ["🌴", "☘️", "🍀", "🌳", "🪴", "🍂", "🍁", "🍄", "🌹", "🌾", "🌸", "🌵"]
@@ -40,12 +40,24 @@ enum Deck: String {
         }
     }
     
-    var pairEmojisCount: Int {
-        Int.random(in: 3...emojis.count)
-    }
-    
     static var sortedDeck: Deck {
         let decks: [Deck] = [.halloween, .animals, .food, .flags, .smileys, .nature, .sports]
         return decks.shuffled().first!
+    }
+    
+    struct DeckJson: Codable {
+        var title: String
+        var emojis: [String]
+        var color: UIColor.RGB
+        
+        init(with deck: Deck) {
+            title = deck.rawValue
+            emojis = deck.emojis
+            color = deck.color.rgbColor
+        }
+        
+        var json: Data? {
+            return try? JSONEncoder().encode(self)
+        }
     }
 }

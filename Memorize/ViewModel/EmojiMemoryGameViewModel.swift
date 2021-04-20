@@ -13,7 +13,8 @@ final class EmojiMemoryGameViewModel: ObservableObject {
     private static var deck = Deck.sortedDeck
     
     private static func createMemoryGame() -> MemoryGame<String> {
-        return MemoryGame<String>(numberOfPairsOfCards: deck.pairEmojisCount) { pairIndex in
+        print("json - \(Deck.DeckJson(with: deck).json?.utf8 ?? "nil")")
+        return MemoryGame<String>(numberOfPairsOfCards: deck.emojis.count) { pairIndex in
             deck.emojis[pairIndex]
         }
     }
