@@ -9,10 +9,20 @@ import SwiftUI
 
 @main
 struct MemorizeApp: App {
+    let viewModel: MemoryGameDecksViewModel
+    
+    init() {
+        viewModel = MemoryGameDecksViewModel()
+        if viewModel.decks.isEmpty {
+            for deck in Deck.allCases {
+                viewModel.addNew(deck: Deck.CustomDeck(with: deck), named: deck.rawValue)
+            }
+        }
+    }
+    
     var body: some Scene {
         WindowGroup {
-            let game = EmojiMemoryGameViewModel()
-            ContentView(viewModel: game)
+            ThemeChooserList(viewModel: viewModel)
         }
     }
 }

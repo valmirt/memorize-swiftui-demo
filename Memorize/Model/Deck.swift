@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-enum Deck: String {
+enum Deck: String, CaseIterable, Identifiable {
     case halloween = "Halloween"
     case animals = "Animals"
     case food = "Food"
@@ -15,6 +15,8 @@ enum Deck: String {
     case smileys = "Smileys"
     case nature = "Nature"
     case sports = "Sports"
+    
+    var id: Deck { self }
     
     var emojis: [String] {
         switch self {
@@ -28,7 +30,7 @@ enum Deck: String {
         }
     }
     
-    var color: Color {
+    var defaultColor: Color {
         switch self {
         case .halloween: return .orange
         case .animals: return .yellow
@@ -45,15 +47,24 @@ enum Deck: String {
         return decks.shuffled().first!
     }
     
-    struct DeckJson: Codable {
+    struct CustomDeck: Codable {
         var title: String
         var emojis: [String]
         var color: UIColor.RGB
+        var countPairs: Int
         
         init(with deck: Deck) {
             title = deck.rawValue
             emojis = deck.emojis
-            color = deck.color.rgbColor
+            color = deck.defaultColor.rgbColor
+            countPairs = deck.emojis.count
+        }
+        
+        init(title: String, emojis: [String], color: Color, countPairs: Int) {
+            self.title = title
+            self.emojis = emojis
+            self.color = color.rgbColor
+            self.countPairs = countPairs > emojis.count ? emojis.count : countPairs
         }
         
         var json: Data? {

@@ -7,16 +7,27 @@
 
 import SwiftUI
 
-final class EmojiMemoryGameViewModel: ObservableObject {
-    @Published
-    private var memoryCard: MemoryGame<String> = EmojiMemoryGameViewModel.createMemoryGame()
-    private static var deck = Deck.sortedDeck
+final class EmojiMemoryGameViewModel: ObservableObject, Hashable, Identifiable {
+    let id: UUID
+    let deck: Deck.CustomDeck
+    @Published private var memoryCard: MemoryGame<String>
     
-    private static func createMemoryGame() -> MemoryGame<String> {
-        print("json - \(Deck.DeckJson(with: deck).json?.utf8 ?? "nil")")
-        return MemoryGame<String>(numberOfPairsOfCards: deck.emojis.count) { pairIndex in
-            deck.emojis[pairIndex]
+    init(deck: Deck.CustomDeck? = nil, id: UUID? = nil) {
+        self.id = id ?? UUID()
+        let defaultsKey = "EmojiMemoryGameViewModel.\(self.id.uuidString)"
+        let safeDeck = deck ?? UserDefaults.standard.data(forKey: defaultsKey)?.toModel(model: Deck.CustomDeck.self) ?? Deck.CustomDeck(with: Deck.sortedDeck)
+        self.deck = safeDeck
+        memoryCard = MemoryGame<String>(numberOfPairsOfCards: self.deck.emojis.count) { pairIndex in
+            safeDeck.emojis[pairIndex]
         }
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+    
+    static func == (lhs: EmojiMemoryGameViewModel, rhs: EmojiMemoryGameViewModel) -> Bool {
+        lhs.id == rhs.id
     }
     
     //MARK: - Access to the Model
@@ -24,10 +35,10 @@ final class EmojiMemoryGameViewModel: ObservableObject {
         memoryCard.cards
     }
     var cardsColor: Color {
-        EmojiMemoryGameViewModel.deck.color
+        Color(deck.color)
     }
     var cardName: String {
-        EmojiMemoryGameViewModel.deck.rawValue
+        deck.title
     }
     var gameScore: Int {
         memoryCard.score
@@ -36,10 +47,5 @@ final class EmojiMemoryGameViewModel: ObservableObject {
     //MARK: - Intent(s)
     func choose(card: MemoryGame<String>.Card) {
         memoryCard.choose(card: card)
-    }
-    
-    func newGame() {
-        EmojiMemoryGameViewModel.deck = Deck.sortedDeck
-        memoryCard = EmojiMemoryGameViewModel.createMemoryGame()
     }
 }
