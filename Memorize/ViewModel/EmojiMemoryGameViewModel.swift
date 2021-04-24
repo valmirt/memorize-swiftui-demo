@@ -9,15 +9,22 @@ import SwiftUI
 
 final class EmojiMemoryGameViewModel: ObservableObject, Hashable, Identifiable {
     let id: UUID
-    let deck: Deck.CustomDeck
+    let defaultsKey: String
+    var deck: Deck.CustomDeck {
+        didSet {
+            UserDefaults.standard.set(deck.json, forKey: defaultsKey)
+        }
+    }
     @Published private var memoryCard: MemoryGame<String>
     
     init(deck: Deck.CustomDeck? = nil, id: UUID? = nil) {
         self.id = id ?? UUID()
         let defaultsKey = "EmojiMemoryGameViewModel.\(self.id.uuidString)"
+        self.defaultsKey = defaultsKey
         let safeDeck = deck ?? UserDefaults.standard.data(forKey: defaultsKey)?.toModel(model: Deck.CustomDeck.self) ?? Deck.CustomDeck(with: Deck.sortedDeck)
         self.deck = safeDeck
-        memoryCard = MemoryGame<String>(numberOfPairsOfCards: self.deck.emojis.count) { pairIndex in
+        UserDefaults.standard.set(self.deck.json, forKey: defaultsKey)
+        memoryCard = MemoryGame<String>(numberOfPairsOfCards: self.deck.countPairs) { pairIndex in
             safeDeck.emojis[pairIndex]
         }
     }

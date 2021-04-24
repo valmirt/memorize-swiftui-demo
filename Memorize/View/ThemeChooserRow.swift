@@ -10,14 +10,21 @@ import SwiftUI
 struct ThemeChooserRow: View {
     var deck: Deck.CustomDeck
     
+    var pairs: String {
+        if deck.countPairs == deck.emojis.count {
+            return "All of"
+        }
+        return "\(deck.countPairs) pairs from"
+    }
+    
     var body: some View {
         HStack {
             VStack(alignment: .leading) {
                 Text(deck.title)
-                    .font(.title)
+                    .font(.title2)
                     .foregroundColor(Color(deck.color))
                 HStack {
-                    Text("All of")
+                    Text(pairs)
                         .padding(.trailing, 4)
                         .layoutPriority(1)
                     ScrollView(.horizontal, showsIndicators: false) {

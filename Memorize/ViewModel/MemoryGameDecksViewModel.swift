@@ -12,15 +12,15 @@ final class MemoryGameDecksViewModel: ObservableObject {
     let name: String
     @Published private var documents: [EmojiMemoryGameViewModel : String] = [:]
     
-    func name(for document: EmojiMemoryGameViewModel) -> String {
-        if documents[document] == nil {
-            documents[document] = "Custom Deck"
+    func name(for deck: EmojiMemoryGameViewModel) -> String {
+        if documents[deck] == nil {
+            documents[deck] = "Custom Deck"
         }
-        return documents[document]!
+        return documents[deck]!
     }
     
-    func setName(_ name: String, for document: EmojiMemoryGameViewModel) {
-        documents[document] = name
+    func setName(_ name: String, for deck: EmojiMemoryGameViewModel) {
+        documents[deck] = name
     }
     
     var decks: [EmojiMemoryGameViewModel] {
@@ -35,8 +35,8 @@ final class MemoryGameDecksViewModel: ObservableObject {
         documents[EmojiMemoryGameViewModel(deck: deck)] = name
     }
 
-    func removeDocument(_ document: EmojiMemoryGameViewModel) {
-        documents[document] = nil
+    func removeDeck(_ deck: EmojiMemoryGameViewModel) {
+        documents[deck] = nil
     }
     
     private var autosave: AnyCancellable?

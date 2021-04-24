@@ -22,7 +22,7 @@ struct MemorizeApp: App {
     
     var body: some Scene {
         WindowGroup {
-            ThemeChooserList(viewModel: viewModel)
+            ThemeChooserList().environmentObject(viewModel)
         }
     }
 }
