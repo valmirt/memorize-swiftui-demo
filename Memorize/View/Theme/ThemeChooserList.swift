@@ -11,6 +11,7 @@ struct ThemeChooserList: View {
     @EnvironmentObject var viewModel: MemoryGameDecksViewModel
     @State private var showCreationThemeView = false
     @State private var editMode: EditMode = .inactive
+    @State private var documentToEdit = EmojiMemoryGameViewModel()
     
     private var isEditMode: Bool {
         editMode == .active
@@ -25,22 +26,11 @@ struct ThemeChooserList: View {
                             .navigationTitle(document.cardName)
                     ) {
                         ThemeChooserRow(
-                            deck: document.deck,
+                            document: document,
                             isEditable: isEditMode,
-                            showEditTheme: $showCreationThemeView
+                            showEditTheme: $showCreationThemeView,
+                            documentToEdit: $documentToEdit
                         )
-                        .sheet(isPresented: $showCreationThemeView) {
-                            ThemeCreationView(
-                                isEditMode: isEditMode,
-                                document: document,
-                                showThemeCreation: $showCreationThemeView,
-                                deckName: isEditMode ? document.deck.title : "Custom Deck",
-                                chosenEmojis: isEditMode ? document.deck.emojis : ["🍄"],
-                                pairCount: isEditMode ? document.deck.countPairs : 1,
-                                selectedColor: isEditMode ? document.deck.color : Color.orange.rgbColor
-                            )
-                            .environmentObject(viewModel)
-                        }
                     }
                 }
                 .onDelete { indexSet in
@@ -61,6 +51,18 @@ struct ThemeChooserList: View {
                 }
             }
             .environment(\.editMode, $editMode)
+        }
+        .sheet(isPresented: $showCreationThemeView) {
+            ThemeCreationView(
+                isEditMode: isEditMode,
+                document: documentToEdit,
+                showThemeCreation: $showCreationThemeView,
+                deckName: isEditMode ? documentToEdit.deck.title : "Custom Deck",
+                chosenEmojis: isEditMode ? documentToEdit.deck.emojis : ["🍄"],
+                pairCount: isEditMode ? documentToEdit.deck.countPairs : 1,
+                selectedColor: isEditMode ? documentToEdit.deck.color : Color.orange.rgbColor
+            )
+            .environmentObject(viewModel)
         }
     }
 }

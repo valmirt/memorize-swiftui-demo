@@ -8,15 +8,16 @@
 import SwiftUI
 
 struct ThemeChooserRow: View {
-    var deck: Deck.CustomDeck
+    var document: EmojiMemoryGameViewModel
     var isEditable: Bool
     @Binding var showEditTheme: Bool
+    @Binding var documentToEdit: EmojiMemoryGameViewModel
     
     var pairs: String {
-        if deck.countPairs == deck.emojis.count {
+        if document.deck.countPairs == document.deck.emojis.count {
             return "All of"
         }
-        return "\(deck.countPairs) pairs from"
+        return "\(document.deck.countPairs) pairs from"
     }
     
     var body: some View {
@@ -28,19 +29,22 @@ struct ThemeChooserRow: View {
                     .frame(width: 24, height: 24)
                     .foregroundColor(.purple)
                     .padding(8)
-                    .onTapGesture { showEditTheme = true }
+                    .onTapGesture {
+                        documentToEdit = document
+                        showEditTheme = true
+                    }
             }
             VStack(alignment: .leading) {
-                Text(deck.title)
+                Text(document.deck.title)
                     .font(.title2)
-                    .foregroundColor(Color(deck.color))
+                    .foregroundColor(Color(document.deck.color))
                 HStack {
                     Text(pairs)
                         .padding(.trailing, 4)
                         .layoutPriority(1)
                     ScrollView(.horizontal, showsIndicators: false) {
                         HStack {
-                            ForEach(deck.emojis, id: \.self) { emoji in
+                            ForEach(document.deck.emojis, id: \.self) { emoji in
                                 Text(emoji)
                                     .font(.system(size: 16))
                             }
@@ -57,8 +61,8 @@ struct ThemeChooserRow: View {
 struct ThemeChooserRow_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            ThemeChooserRow(deck: Deck.CustomDeck(with: .halloween), isEditable: false, showEditTheme: .constant(false))
-            ThemeChooserRow(deck: Deck.CustomDeck(with: .flags), isEditable: true, showEditTheme: .constant(false))
+            ThemeChooserRow(document: EmojiMemoryGameViewModel(deck: Deck.CustomDeck(with: .halloween)), isEditable: false, showEditTheme: .constant(false), documentToEdit: .constant(.init()))
+            ThemeChooserRow(document: EmojiMemoryGameViewModel(deck: Deck.CustomDeck(with: .flags)), isEditable: true, showEditTheme: .constant(false), documentToEdit: .constant(.init()))
         }
         .previewLayout(.fixed(width: 400, height: 70))
     }
