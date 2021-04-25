@@ -12,15 +12,35 @@ struct ThemeChooserList: View {
     @State private var showCreationThemeView = false
     @State private var editMode: EditMode = .inactive
     
+    private var isEditMode: Bool {
+        editMode == .active
+    }
+    
     var body: some View {
         NavigationView {
             List {
-                ForEach(viewModel.decks) { deck in
+                ForEach(viewModel.decks) { document in
                     NavigationLink(
-                        destination: EmojiMemoryGameView(viewModel: deck)
-                            .navigationTitle(deck.cardName)
+                        destination: EmojiMemoryGameView(viewModel: document)
+                            .navigationTitle(document.cardName)
                     ) {
-                        ThemeChooserRow(deck: deck.deck)
+                        ThemeChooserRow(
+                            deck: document.deck,
+                            isEditable: isEditMode,
+                            showEditTheme: $showCreationThemeView
+                        )
+                        .sheet(isPresented: $showCreationThemeView) {
+                            ThemeCreationView(
+                                isEditMode: isEditMode,
+                                document: document,
+                                showThemeCreation: $showCreationThemeView,
+                                deckName: isEditMode ? document.deck.title : "Custom Deck",
+                                chosenEmojis: isEditMode ? document.deck.emojis : ["🍄"],
+                                pairCount: isEditMode ? document.deck.countPairs : 1,
+                                selectedColor: isEditMode ? document.deck.color : Color.orange.rgbColor
+                            )
+                            .environmentObject(viewModel)
+                        }
                     }
                 }
                 .onDelete { indexSet in
@@ -41,10 +61,6 @@ struct ThemeChooserList: View {
                 }
             }
             .environment(\.editMode, $editMode)
-        }
-        .sheet(isPresented: $showCreationThemeView) {
-           ThemeCreationView(showThemeCreation: $showCreationThemeView)
-                .environmentObject(viewModel)
         }
     }
 }

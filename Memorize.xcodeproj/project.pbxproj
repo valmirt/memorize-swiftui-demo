@@ -27,7 +27,6 @@
 		59F382102633BAD800FC5931 /* ThemeCreationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F3820F2633BAD800FC5931 /* ThemeCreationView.swift */; };
 		59F382142635E40F00FC5931 /* String+Identifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F382132635E40F00FC5931 /* String+Identifiable.swift */; };
 		59F3821B2635ED2600FC5931 /* ColorChooserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F3821A2635ED2600FC5931 /* ColorChooserView.swift */; };
-		59F3821F2635EF0F00FC5931 /* CheckShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F3821E2635EF0F00FC5931 /* CheckShape.swift */; };
 		59F9FBEA2627B76E00783B56 /* Pie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F9FBE92627B76E00783B56 /* Pie.swift */; };
 		59F9FBED2627C12F00783B56 /* Cardify.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F9FBEC2627C12F00783B56 /* Cardify.swift */; };
 		59F9FBF02627C2D100783B56 /* View+Cardify.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F9FBEF2627C2D100783B56 /* View+Cardify.swift */; };
@@ -56,7 +55,6 @@
 		59F3820F2633BAD800FC5931 /* ThemeCreationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeCreationView.swift; sourceTree = "<group>"; };
 		59F382132635E40F00FC5931 /* String+Identifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Identifiable.swift"; sourceTree = "<group>"; };
 		59F3821A2635ED2600FC5931 /* ColorChooserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorChooserView.swift; sourceTree = "<group>"; };
-		59F3821E2635EF0F00FC5931 /* CheckShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckShape.swift; sourceTree = "<group>"; };
 		59F9FBE92627B76E00783B56 /* Pie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pie.swift; sourceTree = "<group>"; };
 		59F9FBEC2627C12F00783B56 /* Cardify.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cardify.swift; sourceTree = "<group>"; };
 		59F9FBEF2627C2D100783B56 /* View+Cardify.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Cardify.swift"; sourceTree = "<group>"; };
@@ -157,7 +155,6 @@
 		59F382162635EC4400FC5931 /* Theme */ = {
 			isa = PBXGroup;
 			children = (
-				59F3821D2635EEFA00FC5931 /* Shape */,
 				59F3820F2633BAD800FC5931 /* ThemeCreationView.swift */,
 				59F3820226338FF300FC5931 /* ThemeChooserList.swift */,
 				59F38205263393C600FC5931 /* ThemeChooserRow.swift */,
@@ -183,14 +180,6 @@
 				595923812623838300E2479B /* EmojiMemoryGameView.swift */,
 			);
 			path = MemoryGame;
-			sourceTree = "<group>";
-		};
-		59F3821D2635EEFA00FC5931 /* Shape */ = {
-			isa = PBXGroup;
-			children = (
-				59F3821E2635EF0F00FC5931 /* CheckShape.swift */,
-			);
-			path = Shape;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -281,7 +270,6 @@
 				594FC9062625231000718835 /* Grid.swift in Sources */,
 				593F37162626549D0035DFB2 /* Deck.swift in Sources */,
 				59F38206263393C600FC5931 /* ThemeChooserRow.swift in Sources */,
-				59F3821F2635EF0F00FC5931 /* CheckShape.swift in Sources */,
 				59366FD32625391900C4D692 /* Array+Only.swift in Sources */,
 				59F3820C26339BC600FC5931 /* MemoryGameDecksViewModel.swift in Sources */,
 			);

@@ -8,31 +8,25 @@
 import SwiftUI
 
 struct ThemeCreationView: View {
+    var isEditMode: Bool = false
+    var document: EmojiMemoryGameViewModel?
     @EnvironmentObject var viewModel: MemoryGameDecksViewModel
     @Binding var showThemeCreation: Bool
-    @State private var deckName: String = "Custom Deck"
-    @State private var chosenEmojis: [String] = ["🍄"]
+    @State var deckName: String = "Custom Deck"
+    @State var chosenEmojis: [String] = ["🍄"]
     @State private var emojiToAdd = ""
-    @State private var pairCount = 1
-    @State private var selectedColor: Color = .orange
+    @State var pairCount = 1
+    @State var selectedColor: UIColor.RGB = Color.orange.rgbColor
     
     var body: some View {
         VStack {
             ZStack {
-                Text("Create Theme")
+                Text(isEditMode ? "Edit Theme" : "Create Theme")
                     .font(.headline)
                 HStack {
                     Spacer()
                     Button("Done") {
-                        if !deckName.isEmpty || !chosenEmojis.isEmpty {
-                            let deck = Deck.CustomDeck(
-                                title: deckName,
-                                emojis: chosenEmojis,
-                                color: selectedColor,
-                                countPairs: pairCount
-                            )
-                            viewModel.addNew(deck: deck)
-                        }
+                        saveChanges()
                         showThemeCreation = false
                     }
                 }
@@ -41,9 +35,25 @@ struct ThemeCreationView: View {
             Form {
                 SectionThemeName(deckName: $deckName)
                 SectionAddEmoji(emojiToAdd: $emojiToAdd, chosenEmojis: $chosenEmojis)
-                SectionChosenEmoji(chosenEmojis: $chosenEmojis)
+                SectionChosenEmoji(chosenEmojis: $chosenEmojis, pairCount: $pairCount)
                 SectionPairCount(pairCount: $pairCount, maxPair: chosenEmojis.count)
                 SectionColorSelectorView(selectedColor: $selectedColor)
+            }
+        }
+    }
+    
+    private func saveChanges() {
+        if !deckName.isEmpty || !chosenEmojis.isEmpty {
+            let deck = Deck.CustomDeck(
+                title: deckName,
+                emojis: chosenEmojis,
+                color: Color(selectedColor),
+                countPairs: pairCount
+            )
+            if let document = document, isEditMode {
+                viewModel.editDeck(deck, for: document)
+            } else {
+                viewModel.addNew(deck: deck)
             }
         }
     }
@@ -100,6 +110,7 @@ struct SectionAddEmoji: View {
 //MARK: - Chosen Emoji View
 struct SectionChosenEmoji: View {
     @Binding var chosenEmojis: [String]
+    @Binding var pairCount: Int
     
     var body: some View {
         Section(header: EmojiHeader()) {
@@ -115,6 +126,9 @@ struct SectionChosenEmoji: View {
     func remove(selected emoji: String) {
         if let index = chosenEmojis.firstIndex(where: { $0 == emoji }) {
             chosenEmojis.remove(at: index)
+            if pairCount > chosenEmojis.count {
+                pairCount = chosenEmojis.count
+            }
         }
     }
     
@@ -154,16 +168,19 @@ struct SectionPairCount: View {
 
 //MARK: - Color Selector View
 struct SectionColorSelectorView: View {
-    @Binding var selectedColor: Color
+    @Binding var selectedColor: UIColor.RGB
     
     var body: some View {
         Section(header: Text("Color")) {
             Grid(ThemeColor.allCases) { color in
-                ColorChooserView(color: color.color, isSelected: selectedColor == color.color)
-                    .padding(5)
-                    .onTapGesture {
-                        selectedColor = color.color
-                    }
+                ColorChooserView(
+                    color: Color(color.color),
+                    isSelected: selectedColor == color.color
+                )
+                .padding(5)
+                .onTapGesture {
+                    selectedColor = color.color
+                }
             }
             .frame(height: colorHeight)
         }
@@ -174,19 +191,18 @@ struct SectionColorSelectorView: View {
     }
     
     enum ThemeColor: CaseIterable, Identifiable {
-        case orange, yellow, purple, pink, blue, red, green, gray, black
+        case orange, yellow, purple, pink, blue, red, green, gray
         
-        var color: Color {
+        var color: UIColor.RGB {
             switch self {
-            case .orange: return .orange
-            case .yellow: return .yellow
-            case .purple: return .purple
-            case .pink: return .pink
-            case .blue: return .blue
-            case .red: return .red
-            case .green: return .green
-            case .gray: return .gray
-            case .black: return .black
+            case .orange: return Color.orange.rgbColor
+            case .yellow: return Color.yellow.rgbColor
+            case .purple: return Color.purple.rgbColor
+            case .pink: return Color.pink.rgbColor
+            case .blue: return Color.blue.rgbColor
+            case .red: return Color.red.rgbColor
+            case .green: return Color.green.rgbColor
+            case .gray: return Color.gray.rgbColor
             }
         }
         

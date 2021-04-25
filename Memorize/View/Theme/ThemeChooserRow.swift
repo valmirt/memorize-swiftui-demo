@@ -9,6 +9,8 @@ import SwiftUI
 
 struct ThemeChooserRow: View {
     var deck: Deck.CustomDeck
+    var isEditable: Bool
+    @Binding var showEditTheme: Bool
     
     var pairs: String {
         if deck.countPairs == deck.emojis.count {
@@ -19,6 +21,15 @@ struct ThemeChooserRow: View {
     
     var body: some View {
         HStack {
+            if isEditable {
+                Image(systemName: "pencil.circle.fill")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 24, height: 24)
+                    .foregroundColor(.purple)
+                    .padding(8)
+                    .onTapGesture { showEditTheme = true }
+            }
             VStack(alignment: .leading) {
                 Text(deck.title)
                     .font(.title2)
@@ -46,8 +57,8 @@ struct ThemeChooserRow: View {
 struct ThemeChooserRow_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            ThemeChooserRow(deck: Deck.CustomDeck(with: .halloween))
-            ThemeChooserRow(deck: Deck.CustomDeck(with: .flags))
+            ThemeChooserRow(deck: Deck.CustomDeck(with: .halloween), isEditable: false, showEditTheme: .constant(false))
+            ThemeChooserRow(deck: Deck.CustomDeck(with: .flags), isEditable: true, showEditTheme: .constant(false))
         }
         .previewLayout(.fixed(width: 400, height: 70))
     }

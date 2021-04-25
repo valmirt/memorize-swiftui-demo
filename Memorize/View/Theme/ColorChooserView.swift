@@ -20,18 +20,14 @@ struct ColorChooserView: View {
                     Spacer()
                     VStack {
                         Spacer()
-                        ZStack {
-                            CheckShape()
-                                .stroke(lineWidth: 2)
-                                .frame(width: geometry.size.width * 0.15, height: geometry.size.height * 0.10)
-                            Circle()
-                                .stroke(lineWidth: 2)
-                                .frame(width: geometry.size.width * 0.25, height: geometry.size.height * 0.25)
-                        }
-                        .padding(8)
-                        .foregroundColor(.white)
-                        .opacity(isSelected ? 1 : 0)
-                        .animation(.linear)
+                        Image(systemName: "checkmark.circle")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: geometry.size.width * 0.25, height: geometry.size.height * 0.25)
+                            .padding(8)
+                            .foregroundColor(.white)
+                            .opacity(isSelected ? 1 : 0)
+                            .animation(.linear)
                     }
                 }
             }

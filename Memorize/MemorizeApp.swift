@@ -15,7 +15,7 @@ struct MemorizeApp: App {
         viewModel = MemoryGameDecksViewModel()
         if viewModel.decks.isEmpty {
             for deck in Deck.allCases {
-                viewModel.addNew(deck: Deck.CustomDeck(with: deck), named: deck.rawValue)
+                viewModel.addNew(deck: Deck.CustomDeck(with: deck))
             }
         }
     }
