@@ -21,11 +21,11 @@ final class EmojiMemoryGameViewModel: ObservableObject, Hashable, Identifiable {
         self.id = id ?? UUID()
         let defaultsKey = "EmojiMemoryGameViewModel.\(self.id.uuidString)"
         self.defaultsKey = defaultsKey
-        let safeDeck = deck ?? UserDefaults.standard.data(forKey: defaultsKey)?.toModel(model: Deck.CustomDeck.self) ?? Deck.CustomDeck(with: Deck.sortedDeck)
-        self.deck = safeDeck
+        self.deck = deck ?? UserDefaults.standard.data(forKey: defaultsKey)?.toModel(model: Deck.CustomDeck.self) ?? Deck.CustomDeck(with: Deck.sortedDeck)
         UserDefaults.standard.set(self.deck.json, forKey: defaultsKey)
+        let emojis = self.deck.emojis.shuffled()
         memoryCard = MemoryGame<String>(numberOfPairsOfCards: self.deck.countPairs) { pairIndex in
-            safeDeck.emojis[pairIndex]
+            emojis[pairIndex]
         }
     }
     
@@ -57,8 +57,9 @@ final class EmojiMemoryGameViewModel: ObservableObject, Hashable, Identifiable {
     }
     
     func startNewGame() {
+        let emojis = deck.emojis.shuffled()
         memoryCard = MemoryGame<String>(numberOfPairsOfCards: deck.countPairs) { pairIndex in
-            deck.emojis[pairIndex]
+            emojis[pairIndex]
         }
     }
 }

@@ -10,7 +10,7 @@ import SwiftUI
 struct ThemeCreationView: View {
     @EnvironmentObject var viewModel: MemoryGameDecksViewModel
     @Binding var showThemeCreation: Bool
-    @State private var deckName: String = ""
+    @State private var deckName: String = "Custom Deck"
     @State private var chosenEmojis: [String] = ["🍄"]
     @State private var emojiToAdd = ""
     @State private var pairCount = 1
@@ -24,6 +24,15 @@ struct ThemeCreationView: View {
                 HStack {
                     Spacer()
                     Button("Done") {
+                        if !deckName.isEmpty || !chosenEmojis.isEmpty {
+                            let deck = Deck.CustomDeck(
+                                title: deckName,
+                                emojis: chosenEmojis,
+                                color: selectedColor,
+                                countPairs: pairCount
+                            )
+                            viewModel.addNew(deck: deck)
+                        }
                         showThemeCreation = false
                     }
                 }
@@ -31,7 +40,7 @@ struct ThemeCreationView: View {
             .padding()
             Form {
                 SectionThemeName(deckName: $deckName)
-                SectionAddEmoji(emojiToAdd: $emojiToAdd)
+                SectionAddEmoji(emojiToAdd: $emojiToAdd, chosenEmojis: $chosenEmojis)
                 SectionChosenEmoji(chosenEmojis: $chosenEmojis)
                 SectionPairCount(pairCount: $pairCount, maxPair: chosenEmojis.count)
                 SectionColorSelectorView(selectedColor: $selectedColor)
@@ -59,11 +68,7 @@ struct SectionThemeName: View {
     
     var body: some View {
         Section {
-            TextField("Theme Name", text: $deckName, onEditingChanged: { began in
-                if !began {
-                    
-                }
-            })
+            TextField("Theme Name", text: $deckName)
         }
     }
 }
@@ -71,6 +76,7 @@ struct SectionThemeName: View {
 //MARK: - Add Emoji View
 struct SectionAddEmoji: View {
     @Binding var emojiToAdd: String
+    @Binding var chosenEmojis: [String]
     
     var body: some View {
         Section(header: Text("Add Emoji")) {
@@ -79,7 +85,11 @@ struct SectionAddEmoji: View {
                 HStack {
                     Spacer()
                     Button("Add") {
-                        
+                        emojiToAdd.forEach { emoji in
+                            chosenEmojis.append(String(emoji))
+                        }
+                        emojiToAdd = ""
+                        endEditing()
                     }
                 }
             }
@@ -96,11 +106,15 @@ struct SectionChosenEmoji: View {
             Grid(chosenEmojis) { emoji in
                 Text(emoji)
                     .font(Font.system(size: fontSize))
-                    .onTapGesture {
-                        
-                    }
+                    .onTapGesture { remove(selected: emoji) }
             }
             .frame(height: height)
+        }
+    }
+    
+    func remove(selected emoji: String) {
+        if let index = chosenEmojis.firstIndex(where: { $0 == emoji }) {
+            chosenEmojis.remove(at: index)
         }
     }
     

@@ -18,6 +18,7 @@
 		5959239126238F4300E2479B /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5959239026238F4300E2479B /* CardView.swift */; };
 		5959239526239DF000E2479B /* MemoryGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5959239426239DF000E2479B /* MemoryGame.swift */; };
 		5959239926239FE900E2479B /* EmojiMemoryGameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5959239826239FE900E2479B /* EmojiMemoryGameViewModel.swift */; };
+		59D1E2F82635FD6200689999 /* View+ResignFirstResponder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D1E2F72635FD6200689999 /* View+ResignFirstResponder.swift */; };
 		59E7B824262E6F4C00A6BEB3 /* UIColor+RGBA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E7B823262E6F4C00A6BEB3 /* UIColor+RGBA.swift */; };
 		59E7B827262E726700A6BEB3 /* Data+UTF8.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E7B826262E726700A6BEB3 /* Data+UTF8.swift */; };
 		59F3820326338FF300FC5931 /* ThemeChooserList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F3820226338FF300FC5931 /* ThemeChooserList.swift */; };
@@ -46,6 +47,7 @@
 		5959239026238F4300E2479B /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		5959239426239DF000E2479B /* MemoryGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryGame.swift; sourceTree = "<group>"; };
 		5959239826239FE900E2479B /* EmojiMemoryGameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiMemoryGameViewModel.swift; sourceTree = "<group>"; };
+		59D1E2F72635FD6200689999 /* View+ResignFirstResponder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+ResignFirstResponder.swift"; sourceTree = "<group>"; };
 		59E7B823262E6F4C00A6BEB3 /* UIColor+RGBA.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+RGBA.swift"; sourceTree = "<group>"; };
 		59E7B826262E726700A6BEB3 /* Data+UTF8.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+UTF8.swift"; sourceTree = "<group>"; };
 		59F3820226338FF300FC5931 /* ThemeChooserList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeChooserList.swift; sourceTree = "<group>"; };
@@ -79,6 +81,7 @@
 				59E7B823262E6F4C00A6BEB3 /* UIColor+RGBA.swift */,
 				59E7B826262E726700A6BEB3 /* Data+UTF8.swift */,
 				59F382132635E40F00FC5931 /* String+Identifiable.swift */,
+				59D1E2F72635FD6200689999 /* View+ResignFirstResponder.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -265,6 +268,7 @@
 				59F9FBEA2627B76E00783B56 /* Pie.swift in Sources */,
 				595923822623838300E2479B /* EmojiMemoryGameView.swift in Sources */,
 				59F382102633BAD800FC5931 /* ThemeCreationView.swift in Sources */,
+				59D1E2F82635FD6200689999 /* View+ResignFirstResponder.swift in Sources */,
 				59F3820326338FF300FC5931 /* ThemeChooserList.swift in Sources */,
 				5959239126238F4300E2479B /* CardView.swift in Sources */,
 				5959239526239DF000E2479B /* MemoryGame.swift in Sources */,
