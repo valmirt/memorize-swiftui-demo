@@ -26,6 +26,16 @@ struct EmojiMemoryGameView: View {
         }
         .foregroundColor(viewModel.cardsColor)
         .padding()
+        .toolbar {
+            ToolbarItemGroup(placement: .navigationBarTrailing) {
+                Button("New Game") {
+                    viewModel.startNewGame()
+                }
+            }
+        }
+        .onAppear {
+            viewModel.startNewGame()
+        }
     }
 }
 

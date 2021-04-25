@@ -55,4 +55,10 @@ final class EmojiMemoryGameViewModel: ObservableObject, Hashable, Identifiable {
     func choose(card: MemoryGame<String>.Card) {
         memoryCard.choose(card: card)
     }
+    
+    func startNewGame() {
+        memoryCard = MemoryGame<String>(numberOfPairsOfCards: deck.countPairs) { pairIndex in
+            deck.emojis[pairIndex]
+        }
+    }
 }

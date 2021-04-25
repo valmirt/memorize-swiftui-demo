@@ -43,7 +43,8 @@ struct ThemeChooserList: View {
             .environment(\.editMode, $editMode)
         }
         .sheet(isPresented: $showCreationThemeView) {
-           ThemeCreationView()
+           ThemeCreationView(showThemeCreation: $showCreationThemeView)
+                .environmentObject(viewModel)
         }
     }
 }
